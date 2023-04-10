@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  ros-master:
+    image: ros:noetic-ros-core
+    container_name: ros-master
+    command: stdbuf -o L roscore
+    network_mode: host
+
+  segbot-gazebo:
+    user: root
+    depends_on: 
+      - ros-master
+    image: segbot:latest
+    build: .
+    container_name: segbot-gazebo
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "/tmp/.docker.xauth:/tmp/.docker.xauth"
+      - "./src:/root/catkin_ws/src"
+      - "./entrypoint:/root/entrypoint"
+    environment:
+      - "DISPLAY=$DISPLAY"
+      - "XAUTHORITY=/tmp/.docker.xauth"
+      - "QT_X11_NO_MITSHM=1"
+    privileged: True
+    network_mode: host
+    entrypoint: /root/entrypoint/gazebo-entrypoint.sh
+    command: ["roslaunch segbot_gazebo segbot_office.launch"]
+
+  segbot-bash:
+    user: root
+    depends_on: 
+      - ros-master
+    image: segbot:latest
+    build: .
+    container_name: segbot-bash
+    command: bash
+    network_mode: host
+    stdin_open: True
+    tty: True

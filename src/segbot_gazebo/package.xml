@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>segbot_gazebo</name>
+  <version>1.0.0</version>
+  <description>segbot gazebo</description>
+
+  <author email="dang.baloc@hachi-x.comn">Dang Loc</author>
+  <maintainer email="dang.baloc@hachi-x.comn">Dang Loc</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <export>
+  </export>
+</package>
